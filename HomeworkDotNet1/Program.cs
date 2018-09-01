@@ -24,7 +24,7 @@ namespace HomeworkDotNet1
 
             var currentScene = startingScene;
 
-            while (currentScene.SceneType != SceneTypes.BadEnding)
+            while (! currentScene.IsEnding())
             {
                 narrator.Interact(currentScene);
                 party.Interact(currentScene);
@@ -37,6 +37,7 @@ namespace HomeworkDotNet1
                         ? currentScene.SuccessPathDescription
                         : currentScene.FailurePathDescription
                     );
+
                     currentScene = nextScene;
                 }
                 else
@@ -45,14 +46,16 @@ namespace HomeworkDotNet1
                     break;
                 }
             }
-            // create party
-            // load default story-tree
-            // while !death-scene && any alive
-            // - narrator interact
-            // - players interact
-            // - narrator say success/failure description
-            // - update next scene
-            // Game Over!
+
+            switch (currentScene.SceneType)
+            {
+                case SceneTypes.GoodEnding:
+                    narrator.Say(Narrator.GoodEndingSpeech);
+                    break;
+                case SceneTypes.BadEnding:
+                    narrator.Say(Narrator.BadEndingSpeech);
+                    break;
+            }
 
             // so that console won't disappear
             Console.ReadKey();

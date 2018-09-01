@@ -18,8 +18,8 @@ namespace HomeworkDotNet1
         public static string SarcasticJoke => SarcasticJokes[rnd.Next(0, SarcasticJokes.Length)];
 
         public static string AllDeadSpeech => "Oh Lord! Last joke I made was literally KILLING!";
-        public static string BadEndSpeech => "Nah. U all dead or cursed or whatever. Game over.";
-        public static string GoodEndSpeech => "WTF? You were supposed to die! *whispers* How did that get past QA?"
+        public static string BadEndingSpeech => "Nah. U all dead or cursed or whatever. Game over.";
+        public static string GoodEndingSpeech => "WTF? You were supposed to die! *whispers* How did that get past QA?"
             + Environment.NewLine 
             + "What? We don't have QA? Well, it explains a lot.";
 

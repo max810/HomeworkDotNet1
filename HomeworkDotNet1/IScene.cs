@@ -13,8 +13,9 @@
         IScene SuccessPath { get; }
         IScene FailurePath { get; }
 
-        IScene GetNextScene(double modifier = 0.0);
+        bool IsEnding();
+        IScene GetNextScene(double successModifier = 0.0);
        
-        //change success/fail to left/right
+        // ? change success/fail to left/right
     }
 }

@@ -33,5 +33,17 @@ namespace HomeworkDotNet1
             }
             return SuccessPath;
         }
+
+        public bool IsEnding()
+        {
+            switch (SceneType)
+            {
+                case SceneTypes.GoodEnding:
+                case SceneTypes.BadEnding:
+                    return true;
+                default:
+                    return false;
+            }
+        }
     }
 }
