@@ -32,5 +32,25 @@ namespace HomeworkDotNet1
         {
             return Heroes.Any(x => x.IsAlive);
         }
+
+        public void DisplayPartyInfo()
+        {
+            StringBuilder res = new StringBuilder();
+            foreach(var hero in Heroes)
+            {
+                res.AppendFormat($"{hero.Name}: ");
+                if (hero.IsAlive)
+                {
+                    res.AppendFormat("{0:0.00}", hero.Luck);
+                }
+                else
+                {
+                    res.Append("DEAD");
+                }
+                res.Append(" | ");
+            }
+
+            Console.WriteLine(res.ToString());
+        }
     }
 }

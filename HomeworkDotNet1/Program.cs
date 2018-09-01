@@ -20,13 +20,20 @@ namespace HomeworkDotNet1
 
             var narrator = new Narrator();
 
-            var startingScene = SceneFactory.LoadDefaultStory();
+            var startingScene = SceneFactory.LoadSampleStory();
 
             var currentScene = startingScene;
 
-            while (! currentScene.IsEnding())
+            do
             {
+                party.DisplayPartyInfo();
                 narrator.Interact(currentScene);
+
+                if (currentScene.IsEnding())
+                {
+                    break;
+                }
+
                 party.Interact(currentScene);
                 if (party.AnyAlive())
                 {
@@ -45,7 +52,7 @@ namespace HomeworkDotNet1
                     narrator.Say(Narrator.AllDeadSpeech);
                     break;
                 }
-            }
+            } while (true);
 
             switch (currentScene.SceneType)
             {
@@ -57,6 +64,7 @@ namespace HomeworkDotNet1
                     break;
             }
 
+            Console.WriteLine("GAME OVER");
             // so that console won't disappear
             Console.ReadKey();
         }

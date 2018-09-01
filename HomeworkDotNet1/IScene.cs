@@ -8,13 +8,13 @@
         string SuccessPathDescription { get; set; }
         string FailurePathDescription { get; set; }
         bool IsRandom { get; set; }
-        double SuccessChance { get; set; }
+        double LuckNeeded { get; set; }
 
-        IScene SuccessPath { get; }
-        IScene FailurePath { get; }
+        IScene SuccessPath { get; set; }
+        IScene FailurePath { get; set; }
 
         bool IsEnding();
-        IScene GetNextScene(double successModifier = 0.0);
+        IScene GetNextScene(double luckModifier = 0.0);
        
         // ? change success/fail to left/right
     }

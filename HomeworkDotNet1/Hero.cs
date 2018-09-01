@@ -19,9 +19,9 @@ namespace HomeworkDotNet1
 
         public void Interact(IScene scene)
         {
-            Luck += (rnd.NextDouble() - 0.5) / 2.5;
+            Luck += (rnd.NextDouble() - 0.5) / 2.0;
 
-            if(Luck < scene.SuccessChance)
+            if(IsAlive && Luck < scene.LuckNeeded / 2)
             {
                 Die();
             }
@@ -29,7 +29,7 @@ namespace HomeworkDotNet1
 
         private void Die()
         {
-            Console.WriteLine($"{Name} умер(ла). Печалька =(");
+            Console.WriteLine($"{Name}: Mr Player, I don't feel so good... *Dies*");
             IsAlive = false;
         }
 

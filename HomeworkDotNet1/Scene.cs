@@ -15,7 +15,7 @@ namespace HomeworkDotNet1
         public string SuccessPathDescription { get; set; }
         public string FailurePathDescription { get; set; }
         public bool IsRandom { get; set; }
-        public double SuccessChance { get; set; }
+        public double LuckNeeded { get; set; }
         public IScene SuccessPath { get; set; }
         public IScene FailurePath { get; set; }
 
@@ -27,11 +27,12 @@ namespace HomeworkDotNet1
             }
             if (IsRandom)
             {
-                return rnd.NextDouble() + modifier >= SuccessChance 
+                return rnd.NextDouble() + modifier >= LuckNeeded 
                     ? SuccessPath 
                     : FailurePath; 
             }
-            return SuccessPath;
+
+            throw new ArgumentException($"This type of scene ({SceneType}) has no next scenes!");
         }
 
         public bool IsEnding()

@@ -11,6 +11,6 @@ namespace HomeworkDotNet1
         Text = 0x0,
         BadEnding = 0x1,
         GoodEnding = 0x2,
-        RegularScene = 0x4
+        Choice = 0x4
     }
 }
