@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace HomeworkDotNet1
 {
-    public enum SceneTypes
+    public enum SceneType
     {
         Text = 0x0,
         BadEnding = 0x1,

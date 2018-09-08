@@ -3,18 +3,17 @@
     public interface IScene
     {
         // remove sets
-        SceneTypes SceneType { get; set; }
+        SceneType SceneType { get; set; }
         string Description { get; set; }
         string SuccessPathDescription { get; set; }
         string FailurePathDescription { get; set; }
-        bool IsRandom { get; set; }
-        double LuckNeeded { get; set; }
 
-        IScene SuccessPath { get; set; }
-        IScene FailurePath { get; set; }
+        IScene SuccessPathScene { get; set; }
+        IScene FailurePathScene { get; set; }
 
-        bool IsEnding();
-        IScene GetNextScene(double luckModifier = 0.0);
+        // user input
+        IScene GetNextScene(bool isSuccess);
+        IScene GetNextSceneRandom(double modifier = 0.0);
        
         // ? change success/fail to left/right
     }

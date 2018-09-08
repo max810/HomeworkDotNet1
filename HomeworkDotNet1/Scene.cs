@@ -10,41 +10,45 @@ namespace HomeworkDotNet1
     {
         private readonly Random rnd = new Random();
 
-        public SceneTypes SceneType { get; set; }
+        public SceneType SceneType { get; set; }
         public string Description { get; set; }
         public string SuccessPathDescription { get; set; }
         public string FailurePathDescription { get; set; }
-        public bool IsRandom { get; set; }
-        public double LuckNeeded { get; set; }
-        public IScene SuccessPath { get; set; }
-        public IScene FailurePath { get; set; }
+        public IScene SuccessPathScene { get; set; }
+        public IScene FailurePathScene { get; set; }
 
-        public IScene GetNextScene(double modifier = 0.0)
+        public IScene GetNextScene(bool isSuccess)
         {
-            if(SceneType == SceneTypes.Text)
+            if (IsEnding(this))
             {
-                return SuccessPath;
-            }
-            if (IsRandom)
-            {
-                return rnd.NextDouble() + modifier >= LuckNeeded 
-                    ? SuccessPath 
-                    : FailurePath; 
+                throw new SceneException("Ending scene!");
             }
 
-            throw new ArgumentException($"This type of scene ({SceneType}) has no next scenes!");
+            return isSuccess ? SuccessPathScene : FailurePathScene;
         }
 
-        public bool IsEnding()
+        public IScene GetNextSceneRandom(double modifier = 0)
         {
-            switch (SceneType)
+            return rnd.NextDouble() + modifier >= 0.5
+                    ? SuccessPathScene
+                    : FailurePathScene;
+        }
+
+        public static bool IsEnding(SceneType sceneType)
+        {
+            switch (sceneType)
             {
-                case SceneTypes.GoodEnding:
-                case SceneTypes.BadEnding:
+                case SceneType.GoodEnding:
+                case SceneType.BadEnding:
                     return true;
                 default:
                     return false;
             }
+        }
+
+        public static bool IsEnding(IScene scene)
+        {
+            return IsEnding(scene.SceneType);
         }
     }
 }

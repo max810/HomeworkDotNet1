@@ -12,61 +12,82 @@ namespace HomeworkDotNet1
         {
             var heroes = new List<Hero>
             {
-                new Hero("Max", 0.5),
-                new Hero("AlexDarkStalker98", 1.0),
-                new Hero("Gaben", 0.1)
+                new Hero("Max"),
+                new Hero("AlexDarkStalker98"),
+                new Hero("Gaben")
             };
             var party = new Party(heroes);
-
             var narrator = new Narrator();
 
-            var startingScene = SceneFactory.LoadSampleStory();
+            party.AddNarrator(narrator);
+            narrator.AddParty(party);
 
+            var startingScene = SceneFactory.LoadSampleStory();
             var currentScene = startingScene;
 
-            do
+            Console.WriteLine(Game.WelcomeMessage);
+
+            while(true)
             {
-                party.DisplayPartyInfo();
+                bool chosenPath = true;
                 narrator.Interact(currentScene);
 
-                if (currentScene.IsEnding())
+                if(currentScene.SceneType == SceneType.Choice)
+                {
+                    Console.WriteLine("1) " + currentScene.SuccessPathDescription + "\n");
+                    Console.WriteLine("2) " + currentScene.FailurePathDescription + "\n");
+                    party.DisplayPartyInfo();
+
+                    // переделай так,чтобы инфа о группе выводилась по-другому
+
+                    //party.Interact(currentScene);
+                    chosenPath = GetUserChoice();
+                }
+
+                try
+                {
+                    currentScene = currentScene.GetNextScene(chosenPath);
+                }
+                catch (SceneException)
                 {
                     break;
                 }
-
-                party.Interact(currentScene);
-                if (party.AnyAlive())
-                {
-                    double modifier = party.GetTotalModifier();
-                    var nextScene = currentScene.GetNextScene(modifier);
-                    narrator.Say(
-                        nextScene == currentScene.SuccessPath
-                        ? currentScene.SuccessPathDescription
-                        : currentScene.FailurePathDescription
-                    );
-
-                    currentScene = nextScene;
-                }
-                else
-                {
-                    narrator.Say(Narrator.AllDeadSpeech);
-                    break;
-                }
-            } while (true);
+            }
 
             switch (currentScene.SceneType)
             {
-                case SceneTypes.GoodEnding:
+                case SceneType.GoodEnding:
                     narrator.Say(Narrator.GoodEndingSpeech);
                     break;
-                case SceneTypes.BadEnding:
+                case SceneType.BadEnding:
                     narrator.Say(Narrator.BadEndingSpeech);
                     break;
             }
 
-            Console.WriteLine("GAME OVER");
+            Console.WriteLine(Game.GameOverMessage);
+
             // so that console won't disappear
             Console.ReadKey();
+        }
+
+        private static bool GetUserChoice()
+        {
+            do
+            {
+                Console.Write("$> ");
+                string input = Console.ReadLine().Trim();
+                if(int.TryParse(input, out int choice))
+                {
+                    switch (choice)
+                    {
+                        case 1:
+                            return true;
+                        case 2:
+                            return false;
+                    }
+                }
+                Console.WriteLine("Unknown command, try one more time");
+            } while (true);
         }
     }
 }

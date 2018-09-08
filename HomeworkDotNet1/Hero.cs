@@ -9,7 +9,7 @@ namespace HomeworkDotNet1
     class Hero : IInteractiveCharacter
     {
         // to modify scene.SuccessChance
-        public double Luck { get; set; }
+        public event EventHandler Death;
         public string Name { get; set; }
 
         // replace with event?
@@ -19,24 +19,26 @@ namespace HomeworkDotNet1
 
         public void Interact(IScene scene)
         {
-            Luck += (rnd.NextDouble() - 0.5) / 2.0;
 
-            if(IsAlive && Luck < scene.LuckNeeded / 2)
-            {
-                Die();
-            }
         }
 
-        private void Die()
+        public void Die()
         {
-            Console.WriteLine($"{Name}: Mr Player, I don't feel so good... *Dies*");
+            Console.WriteLine($"{Name}: Mr Player, I don't feel so good...");
             IsAlive = false;
+            Death?.Invoke(this, new EventArgs());
         }
 
-        public Hero(string name, double luck)
+        public override string ToString()
+        {
+            return $"{Name}, {(IsAlive ? "Alive" : "Dead")}";
+        }
+
+        public Hero(string name)
         {
             Name = name;
-            Luck = luck;
         }
+
+        
     }
 }
