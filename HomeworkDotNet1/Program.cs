@@ -38,8 +38,6 @@ namespace HomeworkDotNet1
                     Console.WriteLine("2) " + currentScene.FailurePathDescription + "\n");
                     party.DisplayPartyInfo();
 
-                    // переделай так,чтобы инфа о группе выводилась по-другому
-
                     //party.Interact(currentScene);
                     chosenPath = GetUserChoice();
                 }
